@@ -20,6 +20,7 @@ namespace BulkyBook.Controllers
         }
 
 
+
         //Create - GET
         public IActionResult Create()
         {
@@ -31,9 +32,13 @@ namespace BulkyBook.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category obj)
         {
-            _db.Categories.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
     }
 }
